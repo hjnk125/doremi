@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { LyricsContext } from './App';
 import logo from './logo.png';
 import './App.scss';
@@ -9,6 +9,8 @@ import './App.scss';
 
 function Step1() {
     const { random, line1, line2, line3, goNext, setRandom, setLine1, setLine2, setLine3, setGoNext } = useContext(LyricsContext);
+
+    const [count, setCount] = useState([]);
 
     const getAllLyrics = (e) => {
         let str = e.target.value.replace(/\n/g, ''); // 문자열 줄바꿈 제거
@@ -40,23 +42,31 @@ function Step1() {
 
     // 랜덤시킨 글자들을 한줄씩 글자 수에 맞춰 다시 slice해서 나누어야함
     const countLines = (lines) => {
-        let count = lines.map(line => line.replace(/\s/g, '').length);  // [3, 4, 5]
+        let count = lines.map(line => line.replace(/\s/g, '').length);  // [3, 4, 5] 글자수 배열
+        setCount(count);
+    }
+
+    // onChange(가사입력)를 통해 state가 random -> count 순으로 변화하고 있음
+    // count가 변화할 때마다, line1&line2&line3를 DOM에 맵핑해주어야 함!
+    useEffect(() => {
         setLine1(random.slice(0, count[0]));
         setLine2(random.slice(count[0], count[0] + count[1]));
-
         if (count[2]) {
             setLine3(random.slice(count[0] + count[1], count[0] + count[1] + count[2]));
         } else {
             setLine3([]);
         }
-        console.log(line1, line2, line3);
-    }
+        // console.log(line1, line2, line3);
+    }, [count])
 
     return (
         <div className={goNext ? "none" : "Step1"}>
 
             <div className="title">
-                <img src={logo} style={{ width: "127px", height: "103px" }}></img>
+                <img src={logo}
+                    sizes="(min-width: 759px) 127px, 103px"
+                    style={{ objectFit: "contain" }}
+                ></img>
                 <div className="inputArea">
                     <span>안보이게 조심!! 줄 바꿈 엔터 쳐주세용</span>
                     <button className="button" onClick={() => setGoNext(!goNext)}>OK!</button>

@@ -22,9 +22,9 @@ function Step2() {
 
   return (
     <div className={goNext ? "Step2" : "none"}>
-      <button className={start ? "none" : "startButton"} onClick={() => { setStart(true); blinkTimer(); }}> 시작!</button>
-      <button className="backButton" onClick={() => { setStart(false); setGoNext(!goNext); }}>〈〈 뒤로가기</button>
       <div className="gameStart">
+        <button className="backButton" onClick={() => { setStart(false); setGoNext(!goNext); }}>〈〈 뒤로가기</button>
+        <button className={start ? "none" : "startButton"} onClick={() => { setStart(true); blinkTimer(); }}> 시작!</button>
         <div>
           {line1.map((letter, i) => {
             return (<span key={i} className={(i % 3 === 0) ? `${blink} orange` : (i % 3 === 1) ? `${blink} yellow` : `${blink} blue`}>{letter}</span>)

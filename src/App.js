@@ -1,4 +1,4 @@
-import React, { createContext, useMemo, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import './App.scss';
 import Step1 from './Step1';
 import Step2 from './Step2';
@@ -26,19 +26,22 @@ function App() {
 
   const [goNext, setGoNext] = useState(false);
 
-  const value = useMemo(() => (
-    { random, line1, line2, line3, goNext, setRandom, setLine1, setLine2, setLine3, setGoNext }
-  ),
-    [random, line1, line2, line3, goNext, setRandom, setLine1, setLine2, setLine3, setGoNext]
-  );
-
   return (
-    <LyricsContext.Provider value={value}>
-      <div className="App">
+    <div className="App">
+      <LyricsContext.Provider value={{ random, line1, line2, line3, goNext, setRandom, setLine1, setLine2, setLine3, setGoNext }}>
+        {(window.matchMedia('(orientation: portrait)').matches) ?
+          // Portrait 모드로 접속한 경우 알림창을 띄움
+          (<div className="landscapeAlert" onClick={(e) => document.querySelector(".landscapeAlert").className = "none"}>
+            <div>
+              <button >✗</button>
+            💡Tip</div>
+            <div>화면을 가로로 돌려 사용하는 것을 추천합니다!</div>
+          </div>) : <></>
+        }
         <Step1 />
         <Step2 />
-      </div>
-    </LyricsContext.Provider>
+      </LyricsContext.Provider>
+    </div>
   );
 }
 

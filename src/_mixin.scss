@@ -1,0 +1,19 @@
+@mixin mobile {
+  @media (max-width: 812px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 813px) {
+    @content;
+  }
+}
+
+
+// 화면이 아주 좁을 때, 로고 이미지 숨기기용
+@mixin x-small {
+  @media (max-width: 450px) {
+    @content;
+  }
+}
