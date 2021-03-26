@@ -32,10 +32,8 @@ function App() {
         {(window.matchMedia('(orientation: portrait)').matches) ?
           // Portrait 모드로 접속한 경우 알림창을 띄움
           (<div className="landscapeAlert" onClick={(e) => document.querySelector(".landscapeAlert").className = "none"}>
-            <div>
-              <button >✗</button>
-            💡Tip</div>
-            <div>화면을 가로로 돌려 사용하는 것을 추천합니다!</div>
+            <div>💡Tip: 화면을 가로로 돌려 사용하는 것을 추천합니다!</div>
+            <button >✗</button>
           </div>) : <></>
         }
         <Step1 />
